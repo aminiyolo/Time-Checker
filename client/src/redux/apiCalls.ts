@@ -14,6 +14,10 @@ interface IUserData {
   password: string;
 }
 
+export const initialize = (dispatch: Dispatch) => {
+  dispatch(loginSet());
+};
+
 export const login = async (dispatch: Dispatch, userData: IUserData) => {
   dispatch(loginStart());
 
@@ -22,5 +26,18 @@ export const login = async (dispatch: Dispatch, userData: IUserData) => {
     dispatch(loginSuccess(res.data));
   } catch (err) {
     dispatch(loginFailure());
+  }
+};
+
+export const logout = async (dispatch: Dispatch, token: string) => {
+  try {
+    await axiosInstance.get("/users/logout", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch(logoutSuccess());
+  } catch (err) {
+    console.log(err);
   }
 };
