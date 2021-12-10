@@ -9,7 +9,7 @@ const Login: React.FC = () => {
   const naviagate = useNavigate();
 
   const { currentUser, isFetching, error } = useSelector(
-    (state: RootState) => state,
+    (state: RootState) => state.user,
   );
   const [ID, setID] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +32,7 @@ const Login: React.FC = () => {
 
   if (currentUser) {
     // 로그인한 유저 로그인 페이지 접근 금지
-    return <Navigate to="/home" />;
+    return <Navigate to="/" />;
   }
 
   if (currentUser === undefined) {

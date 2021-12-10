@@ -20,6 +20,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/api/users", require("./routes/user"));
+app.use("/api/records", require("./routes/record"));
 
 const port = process.env.PORT || 8080;
 

@@ -5,7 +5,7 @@ import { axiosInstance } from "../../config";
 import { RootState } from "../../redux/store";
 
 const Register: React.FC = () => {
-  const { currentUser } = useSelector((state: RootState) => state);
+  const { currentUser } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
     ID: "",

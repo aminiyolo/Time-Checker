@@ -8,10 +8,18 @@ import {
 
 import { axiosInstance } from "../config";
 import { Dispatch } from "redux";
+import { loadData } from "./recordRedux";
 
 interface IUserData {
   ID: string;
   password: string;
+}
+
+interface IRecordData {
+  id: string;
+  date: string;
+  category: string;
+  total: number;
 }
 
 export const initialize = (dispatch: Dispatch) => {
@@ -30,6 +38,7 @@ export const login = async (dispatch: Dispatch, userData: IUserData) => {
 };
 
 export const logout = async (dispatch: Dispatch, token: string) => {
+  console.log("logout");
   try {
     await axiosInstance.get("/users/logout", {
       headers: {
@@ -37,6 +46,16 @@ export const logout = async (dispatch: Dispatch, token: string) => {
       },
     });
     dispatch(logoutSuccess());
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const uploadRecord = async (dispatch: Dispatch, data: IRecordData) => {
+  try {
+    const res = await axiosInstance.post("/records/post", data);
+    console.log(res.data);
+    // dispatch(loadData(res.data.category));
   } catch (err) {
     console.log(err);
   }

@@ -77,4 +77,31 @@ router.get("/logout", auth, async (req, res) => {
   }
 });
 
+router.post("/post", async (req, res) => {
+  const { category, total, Date, id } = req.body;
+  console.log(id);
+  // const record = new Record({
+  //   category: {
+  //     [category]: total,
+  //   },
+  //   date: Date,
+  //   id,
+  // });
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          record: {
+            [category]: total,
+          },
+        },
+      },
+    );
+    return res.status(200).json(user);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 module.exports = router;
