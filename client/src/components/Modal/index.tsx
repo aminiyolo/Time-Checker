@@ -20,7 +20,7 @@ const Modal: VFC<IProps> = ({ date, setRecords }) => {
   const [error, setError] = useState<string | null>(null);
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const dispatch = useDispatch();
-  console.log(currentUser);
+  // console.log(currentUser);
   const getHour = Number(finishHour) - Number(startHour);
   const getMin = Number(finishMin) - Number(startMin);
   const total = 60 * getHour + getMin;
@@ -28,7 +28,7 @@ const Modal: VFC<IProps> = ({ date, setRecords }) => {
     String(date.getFullYear()) +
     String(date.getMonth()) +
     String(date.getDay());
-  console.log(typeof Date);
+  // console.log(typeof Date);
   const handleCategory = (e: React.SyntheticEvent<HTMLElement>) => {
     if (!(e.target as HTMLElement).dataset.id) return;
     setCategory((e.target as HTMLElement).dataset.id);
@@ -101,19 +101,19 @@ const Modal: VFC<IProps> = ({ date, setRecords }) => {
           style={{ display: "flex", flexDirection: "row", margin: 0 }}
           onClick={handleCategory}
         >
-          <button data-id="수면" name="수면">
+          <button data-id="sleep" name="수면">
             수면
           </button>
-          <button data-id="휴식" name="휴식">
-            휴식
-          </button>
-          <button data-id="코딩" name="코딩">
+          <button data-id="coding" name="휴식">
             코딩
           </button>
-          <button data-id="외국어" name="외국어 공부">
-            외국어 공부
+          <button data-id="exercise" name="코딩">
+            운동
           </button>
-          <button data-id="독서" name="독서">
+          <button data-id="english" name="외국어 공부">
+            영어공부
+          </button>
+          <button data-id="reading" name="독서">
             독서
           </button>
         </div>

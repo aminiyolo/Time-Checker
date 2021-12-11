@@ -54,8 +54,8 @@ const Home: React.FC = () => {
         </div>
       </header>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div>
-          <h1>Chart</h1>
+        <div style={{ marginBottom: "30px" }}>
+          <h1>오늘의 기록</h1>
           <Chart />
         </div>
 

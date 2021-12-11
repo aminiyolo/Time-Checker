@@ -55,7 +55,7 @@ export const uploadRecord = async (dispatch: Dispatch, data: IRecordData) => {
   try {
     const res = await axiosInstance.post("/records/post", data);
     console.log(res.data);
-    // dispatch(loadData(res.data.category));
+    dispatch(loadData(res.data));
   } catch (err) {
     console.log(err);
   }

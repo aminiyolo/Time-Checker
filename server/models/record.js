@@ -8,10 +8,6 @@ const recordSchema = mongoose.Schema(
     date: {
       type: String,
     },
-    category: {
-      type: Array,
-      default: [],
-    },
     sleep: {
       type: Number,
     },
