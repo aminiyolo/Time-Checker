@@ -23,6 +23,10 @@ const recordSchema = mongoose.Schema(
     reading: {
       type: Number,
     },
+    times: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true },
 );

@@ -21,6 +21,7 @@ mongoose
 
 app.use("/api/users", require("./routes/user"));
 app.use("/api/records", require("./routes/record"));
+app.use("/api/memos", require("./routes/memos"));
 
 const port = process.env.PORT || 8080;
 

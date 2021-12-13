@@ -22,6 +22,11 @@ interface IRecordData {
   total: number;
 }
 
+interface IDate {
+  date: string;
+  id: string;
+}
+
 export const initialize = (dispatch: Dispatch) => {
   dispatch(loginSet());
 };
@@ -54,6 +59,18 @@ export const logout = async (dispatch: Dispatch, token: string) => {
 export const uploadRecord = async (dispatch: Dispatch, data: IRecordData) => {
   try {
     const res = await axiosInstance.post("/records/post", data);
+    console.log(res.data);
+    dispatch(loadData(res.data));
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getRecord = async (dispatch: Dispatch, params: IDate) => {
+  try {
+    const res = await axiosInstance.get("/records/get", {
+      params: { ...params },
+    });
     console.log(res.data);
     dispatch(loadData(res.data));
   } catch (err) {

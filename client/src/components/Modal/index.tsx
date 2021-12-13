@@ -1,6 +1,5 @@
 import React, { SetStateAction, useState, VFC } from "react";
 import { useSelector } from "react-redux";
-import { axiosInstance } from "../../config";
 import { RootState } from "../../redux/store";
 import { uploadRecord } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
@@ -20,29 +19,39 @@ const Modal: VFC<IProps> = ({ date, setRecords }) => {
   const [error, setError] = useState<string | null>(null);
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const dispatch = useDispatch();
-  // console.log(currentUser);
   const getHour = Number(finishHour) - Number(startHour);
   const getMin = Number(finishMin) - Number(startMin);
   const total = 60 * getHour + getMin;
   const Date =
     String(date.getFullYear()) +
-    String(date.getMonth()) +
-    String(date.getDay());
-  // console.log(typeof Date);
+    String(date.getMonth() + 1) +
+    String(date.getDate());
+
+  const sTime = `${startHour} : ${startMin}`;
+  const fTime = `${finishHour} : ${finishMin}`;
+  console.log(sTime);
+  console.log(fTime);
+
   const handleCategory = (e: React.SyntheticEvent<HTMLElement>) => {
     if (!(e.target as HTMLElement).dataset.id) return;
     setCategory((e.target as HTMLElement).dataset.id);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
     if (!startHour || !startMin || !finishHour || !finishMin)
       return setError("시간을 작성해주세요.");
     if (total <= 0) return setError("시간을 맞게 작성해주세요.");
     if (!category) return setError("카테고리를 선택해주세요.");
+    if (
+      Number(startHour) > 24 ||
+      Number(startMin) > 60 ||
+      Number(finishHour) > 24 ||
+      Number(finishMin) > 60
+    )
+      return setError("시간을 맞게 작성해주세요.");
 
     setError("");
-    // console.log(category);
-    // console.log(total);
     const id = currentUser!._id;
 
     const data = {
@@ -50,55 +59,69 @@ const Modal: VFC<IProps> = ({ date, setRecords }) => {
       date: Date,
       category,
       total,
+      time: {
+        sTime,
+        fTime,
+      },
     };
 
     uploadRecord(dispatch, data);
-    // try {
-    //   const res = await axiosInstance.post("/records/post", {
-    //     Date,
-    //     category,
-    //     total,
-    //     id,
-    //   });
-    //   console.log(res.data);
-    //   setRecords((prev: IRecords) );
-    // } catch (err) {
-    //   console.log(err);
-    // }
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        backgroundColor: "gainsboro",
+        padding: "4rem 7rem",
+      }}
+    >
       <div>
-        <div>
-          <label>시작시간</label>
-          <input
-            maxLength={2}
-            onChange={(e) => setStartHour(e.target.value)}
-          />{" "}
-          시{" "}
-          <input maxLength={2} onChange={(e) => setStartMin(e.target.value)} />{" "}
-          분
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>시작시간</label>
+            <input
+              maxLength={2}
+              value={startHour}
+              onChange={(e) => setStartHour(e.target.value)}
+            />{" "}
+            시{" "}
+            <input
+              maxLength={2}
+              onChange={(e) => setStartMin(e.target.value)}
+            />{" "}
+            분
+          </div>
 
-        <div>
-          <label>끝난시간</label>
-          <input
-            maxLength={2}
-            onChange={(e) => setFinishHour(e.target.value)}
-          />{" "}
-          시{" "}
-          <input maxLength={2} onChange={(e) => setFinishMin(e.target.value)} />{" "}
-          분
-        </div>
-        <div>
-          <button onClick={handleSubmit}>기록 작성</button>
-        </div>
+          <div>
+            <label>끝난시간</label>
+            <input
+              maxLength={2}
+              onChange={(e) => setFinishHour(e.target.value)}
+            />{" "}
+            시{" "}
+            <input
+              maxLength={2}
+              onChange={(e) => setFinishMin(e.target.value)}
+            />{" "}
+            분
+          </div>
+          <div>
+            <button onClick={handleSubmit}>기록 작성</button>
+          </div>
+        </form>
         {error && <div style={{ color: "red", fontWeight: 700 }}>{error}</div>}
       </div>
-      <div>
+
+      <div style={{ marginLeft: "15rem" }}>
         <div
-          style={{ display: "flex", flexDirection: "row", margin: 0 }}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            margin: 0,
+          }}
           onClick={handleCategory}
         >
           <button data-id="sleep" name="수면">
