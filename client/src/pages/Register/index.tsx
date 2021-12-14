@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router";
 import { axiosInstance } from "../../config";
 import { RootState } from "../../redux/store";
+import { Button } from "../Login/style";
+import { Wrapper } from "./style";
 
 const Register: React.FC = () => {
   const { currentUser } = useSelector((state: RootState) => state.user);
@@ -43,7 +45,7 @@ const Register: React.FC = () => {
   }
 
   return (
-    <div>
+    <Wrapper>
       <form onSubmit={handleSubmit}>
         <label>ID</label>
         <input
@@ -68,11 +70,11 @@ const Register: React.FC = () => {
           minLength={6}
         />
         <button type="submit">회원가입</button>
+        <Button>
+          <button onClick={handleClick}>로그인 하러가기</button>
+        </Button>
       </form>
-      <div>
-        <button onClick={handleClick}>로그인 하러가기</button>
-      </div>
-    </div>
+    </Wrapper>
   );
 };
 

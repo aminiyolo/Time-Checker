@@ -1,0 +1,15 @@
+.picker {
+  border: none;
+  border-bottom: max-content solid black;
+  font-size: 1.6rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+input {
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+}

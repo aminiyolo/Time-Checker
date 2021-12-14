@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -18,7 +17,6 @@ const Pie = () => {
     exercise = 0,
     english = 0,
     reading = 0,
-    times,
   } = useSelector((state: RootState) => state.record);
 
   const sum =
@@ -40,16 +38,6 @@ const Pie = () => {
   };
 
   checkRecord({ sleep, coding, exercise, english, reading });
-
-  // const showList = _list.map((list) => {
-  //   return (
-  //     <div>
-  //       <span>33</span>
-  //       <span>{list[0]}</span>
-  //       <span>{list[1]}</span>
-  //     </div>
-  //   );
-  // });
 
   return (
     <>
@@ -77,7 +65,6 @@ const Pie = () => {
           }}
         />
       </div>
-      {/* <div>{showList}</div> */}
     </>
   );
 };

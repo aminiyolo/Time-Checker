@@ -8,31 +8,32 @@ import Modal from "../../components/Modal";
 import Chart from "../../components/Chart/index";
 import DatePicker from "react-datepicker";
 import Memo from "../../components/Memo";
+import {
+  Header,
+  Footer,
+  DatePickerWrapper,
+  DataWrapper,
+  ModalWrapper,
+} from "./style";
 import "react-datepicker/dist/react-datepicker.css";
+import "./style.css";
 
-export interface IRecords {
-  category?: [];
-  data?: string;
-  id?: string;
-}
-
-interface IList {
+interface ITime {
   sTime: string;
   fTime: string;
+  category: string;
 }
 
 const Home: React.FC = () => {
   const [toggle, setToggle] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [list, setList] = useState<IList[]>([]);
-  const [records, setRecords] = useState<IRecords>({});
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const { times } = useSelector((state: RootState) => state.record);
   const dispatch = useDispatch();
   const token = currentUser?.token;
   const id = currentUser?._id;
 
-  const _data =
+  const _date =
     String(date.getFullYear()) +
     String(date.getMonth() + 1) +
     String(date.getDate());
@@ -53,37 +54,8 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (!id) return;
-    getRecord(dispatch, { date: _data, id });
-  }, [date, id, _data, dispatch]);
-
-  const a = times.map((time: [], index: number) => time[index]);
-
-  // let _list: any[] = [];
-
-  const makeList = () => {
-    for (let i = 0; i < a.length; i++) {
-      console.log(a[i]);
-      if (a[i]) {
-        setList([...list, a[i]]);
-      }
-    }
-    return;
-  };
-
-  useEffect(() => {
-    makeList();
-    console.log(list);
-  }, []);
-
-  // const showList = list?.map((list) => {
-  //   return (
-  //     <div>
-  //       <span>33</span>
-  //       <span>{list.sTime}</span>
-  //       <span>{list.fTime}</span>
-  //     </div>
-  //   );
-  // });
+    getRecord(dispatch, { date: _date, id });
+  }, [date, id, _date, dispatch]);
 
   if (!currentUser) {
     return <Navigate to="/login" />;
@@ -91,123 +63,60 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <header
-        style={{
-          padding: "1.5rem",
-          backgroundColor: "gainsboro",
-        }}
-      >
-        <div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "1.5rem",
-              fontWeight: "650",
-            }}
-          >
-            하루하루를 기록해보자
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "right",
-              alignItems: "center",
-            }}
-          >
-            <button
-              style={{
-                padding: "0.4rem",
-                border: "none",
-                borderRadius: "5px",
-              }}
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </div>
+      <Header>
+        <div className="title">기억보다는 기록을...</div>
+        <div className="buttonContainer">
+          <button onClick={handleLogout}>Logout</button>
         </div>
-      </header>
+      </Header>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "1rem",
-        }}
-      >
+      <DatePickerWrapper>
         <div>
-          <DatePicker selected={date} onChange={(d: Date) => setDate(d)} />
+          <DatePicker
+            className="picker"
+            selected={date}
+            onChange={(date: Date) => setDate(date)}
+          />
         </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-around",
-        }}
-      >
-        <div style={{ marginBottom: "30px" }}>
+      </DatePickerWrapper>
+      <hr />
+      <DataWrapper>
+        <div className="record">
           <h1>
             오늘의 기록
-            <span style={{ marginLeft: "0.25rem", fontSize: "1rem" }}>
-              {" "}
-              (분 단위)
-            </span>
+            <span className="min"> (분 단위)</span>
           </h1>
           <Chart />
         </div>
         <div>
           <h2>오늘의 메모</h2>
-          <Memo date={_data} />
+          <Memo date={_date} />
         </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {toggle && <Modal date={date} setRecords={setRecords} />}
-        {list.map((l) => {
-          return (
-            <div>
-              <span>{l.sTime}</span>
-              <span> ~ </span>
-              <span>{l.fTime}</span>
-            </div>
-          );
-        })}
-      </div>
-      <footer
-        style={{
-          fontSize: "32px",
-          cursor: "pointer",
-          padding: "0.7rem",
-          backgroundColor: "gold",
-          bottom: "0",
-          display: "flex",
-          justifyContent: "center",
-          margin: "auto",
-          width: "100%",
-          position: "fixed",
-        }}
-        onClick={handleToggle}
-      >
-        <button
-          style={{
-            cursor: "pointer",
-            border: "none",
-            fontSize: "2rem",
-            padding: "0 0.5rem",
-            borderRadius: "0.8rem",
-          }}
-        >
-          +
-        </button>
-      </footer>
+      </DataWrapper>
+      <ModalWrapper>
+        {toggle && <Modal date={date} handleToggle={handleToggle} />}
+        <div>
+          {!toggle &&
+            times[0] &&
+            times.flat().map((time: ITime, index: number) => {
+              return (
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <div key={index}>
+                    <span>{time.sTime}</span>
+                    <span> ~ </span>
+                    <span>{time.fTime}</span>
+                    <span style={{ marginLeft: "0.5rem" }}>
+                      / 시간 기록: {time.category}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </ModalWrapper>
+      <Footer onClick={handleToggle}>
+        <button>+</button>
+      </Footer>
     </>
   );
 };

@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { timeStamp } from "console";
 
-interface IState {
-  date: string;
-  times: string[] | number;
-  sleep: Number;
-  coding: Number;
-  exercise: Number;
-  english: Number;
-  reading: Number;
-}
+// interface IState {
+//   date: string;
+//   times: string[] | number;
+//   sleep: Number;
+//   coding: Number;
+//   exercise: Number;
+//   english: Number;
+//   reading: Number;
+// }
 
 const initialState = {
   date: "",

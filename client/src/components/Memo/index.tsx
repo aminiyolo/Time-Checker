@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { axiosInstance } from "../../config";
 import { RootState } from "../../redux/store";
+import { Textarea } from "./style";
 
 interface IProps {
   date: string;
@@ -12,7 +13,7 @@ const Memo: React.VFC<IProps> = ({ date }) => {
   const { currentUser } = useSelector((state: RootState) => state.user);
   const id = currentUser?._id;
 
-  const handleClick = async (e: React.SyntheticEvent) => {
+  const handleClick = async () => {
     try {
       await axiosInstance.post("/memos/post", { memo, id, date });
     } catch (err) {
@@ -32,11 +33,7 @@ const Memo: React.VFC<IProps> = ({ date }) => {
 
   return (
     <div>
-      <textarea
-        style={{ width: "17rem", height: "12rem" }}
-        value={memo}
-        onChange={(e) => setMemo(e.target.value)}
-      />
+      <Textarea value={memo} onChange={(e) => setMemo(e.target.value)} />
       <div>
         <button onClick={handleClick}>메모 저장</button>
       </div>

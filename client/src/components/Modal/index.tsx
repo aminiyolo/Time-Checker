@@ -3,14 +3,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { uploadRecord } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
-import { IRecords } from "../../pages/Home";
+import { ModalWrapper, Error, Buttonwrapper, InputWrapper } from "./style";
 
 interface IProps {
   date: Date;
-  setRecords: React.Dispatch<SetStateAction<IRecords>>;
+  handleToggle: () => void;
 }
 
-const Modal: VFC<IProps> = ({ date, setRecords }) => {
+const Modal: VFC<IProps> = ({ date, handleToggle }) => {
   const [startHour, setStartHour] = useState("");
   const [startMin, setStartMin] = useState("");
   const [finishHour, setFinishHour] = useState("");
@@ -29,8 +29,6 @@ const Modal: VFC<IProps> = ({ date, setRecords }) => {
 
   const sTime = `${startHour} : ${startMin}`;
   const fTime = `${finishHour} : ${finishMin}`;
-  console.log(sTime);
-  console.log(fTime);
 
   const handleCategory = (e: React.SyntheticEvent<HTMLElement>) => {
     if (!(e.target as HTMLElement).dataset.id) return;
@@ -53,7 +51,6 @@ const Modal: VFC<IProps> = ({ date, setRecords }) => {
 
     setError("");
     const id = currentUser!._id;
-
     const data = {
       id,
       date: Date,
@@ -62,68 +59,57 @@ const Modal: VFC<IProps> = ({ date, setRecords }) => {
       time: {
         sTime,
         fTime,
+        category,
       },
     };
 
+    handleToggle();
     uploadRecord(dispatch, data);
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        backgroundColor: "gainsboro",
-        padding: "4rem 7rem",
-      }}
-    >
+    <ModalWrapper>
       <div>
         <form onSubmit={handleSubmit}>
-          <div>
-            <label>시작시간</label>
-            <input
-              maxLength={2}
-              value={startHour}
-              onChange={(e) => setStartHour(e.target.value)}
-            />{" "}
-            시{" "}
-            <input
-              maxLength={2}
-              onChange={(e) => setStartMin(e.target.value)}
-            />{" "}
-            분
-          </div>
+          <InputWrapper>
+            <div>
+              <label>시작 시간</label>{" "}
+              <input
+                maxLength={2}
+                value={startHour}
+                onChange={(e) => setStartHour(e.target.value)}
+              />{" "}
+              :{" "}
+              <input
+                maxLength={2}
+                onChange={(e) => setStartMin(e.target.value)}
+              />{" "}
+            </div>
 
-          <div>
-            <label>끝난시간</label>
-            <input
-              maxLength={2}
-              onChange={(e) => setFinishHour(e.target.value)}
-            />{" "}
-            시{" "}
-            <input
-              maxLength={2}
-              onChange={(e) => setFinishMin(e.target.value)}
-            />{" "}
-            분
-          </div>
-          <div>
-            <button onClick={handleSubmit}>기록 작성</button>
-          </div>
+            <div>
+              <label>끝난 시간</label>{" "}
+              <input
+                maxLength={2}
+                onChange={(e) => setFinishHour(e.target.value)}
+              />{" "}
+              :{" "}
+              <input
+                maxLength={2}
+                onChange={(e) => setFinishMin(e.target.value)}
+              />{" "}
+            </div>
+            <div>
+              <button onClick={handleSubmit}>기록 작성</button>
+            </div>
+          </InputWrapper>
         </form>
-        {error && <div style={{ color: "red", fontWeight: 700 }}>{error}</div>}
+        {error && <Error>{error}</Error>}
       </div>
 
-      <div style={{ marginLeft: "15rem" }}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            margin: 0,
-          }}
-          onClick={handleCategory}
-        >
+      <Buttonwrapper>
+        <div className="button" onClick={handleCategory}>
+          {" "}
+          {/* 이벤트 위임 */}
           <button data-id="sleep" name="수면">
             수면
           </button>
@@ -140,8 +126,8 @@ const Modal: VFC<IProps> = ({ date, setRecords }) => {
             독서
           </button>
         </div>
-      </div>
-    </div>
+      </Buttonwrapper>
+    </ModalWrapper>
   );
 };
 
