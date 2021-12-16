@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   & > form {
     display: flex;
     flex-direction: column;
-    padding: 8rem;
+    padding: 5rem;
 
     & > label {
       font-size: 2.5rem;
@@ -30,4 +30,10 @@ export const Wrapper = styled.div`
       cursor: pointer;
     }
   }
+`;
+
+export const Info = styled.div`
+  font-size: 1.5rem;
+  color: darkgreen;
+  font-weight: 700;
 `;

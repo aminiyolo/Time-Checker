@@ -14,6 +14,7 @@ import {
   DatePickerWrapper,
   DataWrapper,
   ModalWrapper,
+  TimeWrapper,
 } from "./style";
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.css";
@@ -95,24 +96,24 @@ const Home: React.FC = () => {
       </DataWrapper>
       <ModalWrapper>
         {toggle && <Modal date={date} handleToggle={handleToggle} />}
-        <div>
+        <TimeWrapper>
           {!toggle &&
             times[0] &&
             times.flat().map((time: ITime, index: number) => {
               return (
-                <div style={{ marginBottom: "1.5rem" }}>
+                <div className="container">
                   <div key={index}>
                     <span>{time.sTime}</span>
                     <span> ~ </span>
                     <span>{time.fTime}</span>
-                    <span style={{ marginLeft: "0.5rem" }}>
+                    <span className="category">
                       / 시간 기록: {time.category}
                     </span>
                   </div>
                 </div>
               );
             })}
-        </div>
+        </TimeWrapper>
       </ModalWrapper>
       <Footer onClick={handleToggle}>
         <button>+</button>

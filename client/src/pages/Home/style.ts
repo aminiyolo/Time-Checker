@@ -27,7 +27,7 @@ export const Header = styled.header`
       color: white;
       cursor: pointer;
       transition: all 300ms ease-in;
-      font-size: 0.9rem;
+      font-size: 1rem;
       &:hover {
         letter-spacing: 0.2rem;
       }
@@ -60,6 +60,25 @@ export const ModalWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 4rem;
+`;
+
+export const TimeWrapper = styled.div`
+  width: 70%;
+  margin: auto;
+  text-align: center;
+  font-size: 1.5rem;
+
+  & > .container {
+    margin-bottom: 1.3rem;
+    margin-left: 0.5rem;
+    padding: 0.9rem;
+    background-color: lightblue;
+    border-radius: 0.8rem;
+    & > .category {
+      margin-bottom: 1.5rem;
+    }
+  }
 `;
 
 export const Footer = styled.footer`

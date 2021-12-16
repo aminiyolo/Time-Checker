@@ -37,5 +37,6 @@ export const InputWrapper = styled.div`
 
 export const Error = styled.div`
   color: red;
+  font-size: 1.4rem;
   font-weight: 700;
 `;

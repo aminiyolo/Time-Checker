@@ -24,7 +24,7 @@ export const Wrapper = styled.div`
     }
 
     & > button {
-      margin-top: 2rem;
+      margin: 2rem 0;
       padding: 1.5rem;
       font-size: 2rem;
       cursor: pointer;
