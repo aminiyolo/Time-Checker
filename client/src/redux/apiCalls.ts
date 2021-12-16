@@ -8,7 +8,7 @@ import {
 
 import { axiosInstance } from "../config";
 import { Dispatch } from "redux";
-import { loadData } from "./recordRedux";
+import { loadStart, loadSuccess, loadFailure } from "./recordRedux";
 
 interface IUserData {
   ID: string;
@@ -43,7 +43,6 @@ export const login = async (dispatch: Dispatch, userData: IUserData) => {
 };
 
 export const logout = async (dispatch: Dispatch, token: string) => {
-  console.log("logout");
   try {
     await axiosInstance.get("/users/logout", {
       headers: {
@@ -53,27 +52,30 @@ export const logout = async (dispatch: Dispatch, token: string) => {
     dispatch(logoutSuccess());
   } catch (err) {
     console.log(err);
+    alert("잠시 후에 다시 시도해주세요.");
   }
 };
 
 export const uploadRecord = async (dispatch: Dispatch, data: IRecordData) => {
+  dispatch(loadStart());
+
   try {
     const res = await axiosInstance.post("/records/post", data);
-    console.log(res.data);
-    dispatch(loadData(res.data));
+    dispatch(loadSuccess(res.data));
   } catch (err) {
-    console.log(err);
+    dispatch(loadFailure());
   }
 };
 
 export const getRecord = async (dispatch: Dispatch, params: IDate) => {
+  dispatch(loadStart());
+
   try {
     const res = await axiosInstance.get("/records/get", {
       params: { ...params },
     });
-    console.log(res.data);
-    dispatch(loadData(res.data));
+    dispatch(loadSuccess(res.data));
   } catch (err) {
-    console.log(err);
+    dispatch(loadFailure());
   }
 };

@@ -8,7 +8,7 @@ export const Header = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     font-weight: 800;
     color: white;
     margin-top: 0.6rem;
@@ -38,7 +38,8 @@ export const Header = styled.header`
 export const DatePickerWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  background-color: black;
+  padding: 0.5rem;
 `;
 
 export const DataWrapper = styled.div`
@@ -56,10 +57,17 @@ export const DataWrapper = styled.div`
   }
 `;
 
+export const Block = styled.div`
+  height: 0.3rem;
+  width: 100%;
+  background-color: black;
+`;
+
 export const ModalWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 1rem;
   margin-bottom: 4rem;
 `;
 
@@ -67,7 +75,8 @@ export const TimeWrapper = styled.div`
   width: 70%;
   margin: auto;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
 
   & > .container {
     margin-bottom: 1.3rem;
@@ -79,6 +88,14 @@ export const TimeWrapper = styled.div`
       margin-bottom: 1.5rem;
     }
   }
+`;
+
+export const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
 `;
 
 export const Footer = styled.footer`

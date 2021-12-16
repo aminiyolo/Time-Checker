@@ -4,7 +4,6 @@ const { Record } = require("../models/record");
 
 router.post("/post", async (req, res) => {
   const { category, total, date, id, time } = req.body;
-  console.log(time);
   const data = await Record.findOne({ date, id });
   try {
     if (data) {

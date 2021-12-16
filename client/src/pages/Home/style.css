@@ -1,9 +1,11 @@
 .picker {
   border: none;
   border-bottom: max-content solid black;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
   cursor: pointer;
+  background-color: black;
+  color: white;
 }
 
 input {

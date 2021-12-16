@@ -87,16 +87,6 @@ router.post("/post", async (req, res) => {
       date: Date,
       id,
     });
-    // const user = await User.findOneAndUpdate(
-    //   { _id: id },
-    //   {
-    //     $set: {
-    //       record: {
-    //         [category]: total,
-    //       },
-    //     },
-    //   },
-    // );
     return res.status(200).json(record);
   } catch (err) {
     console.log(err);

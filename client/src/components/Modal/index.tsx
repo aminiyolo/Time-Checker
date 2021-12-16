@@ -1,4 +1,4 @@
-import React, { SetStateAction, useState, VFC } from "react";
+import React, { useState, VFC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { uploadRecord } from "../../redux/apiCalls";
@@ -30,9 +30,15 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
   const sTime = `${startHour} : ${startMin}`;
   const fTime = `${finishHour} : ${finishMin}`;
 
-  const handleCategory = (e: React.SyntheticEvent<HTMLElement>) => {
-    if (!(e.target as HTMLElement).dataset.id) return;
-    setCategory((e.target as HTMLElement).dataset.id);
+  const handleCategory = (e: any) => {
+    if (!e.target.dataset.id) return;
+    setCategory(e.target.dataset.id);
+
+    e.target.parentNode.childNodes.forEach((el: any) =>
+      el.classList.remove("clicked"),
+    );
+
+    e.target.classList.add("clicked");
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
@@ -99,7 +105,9 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
               />{" "}
             </div>
             <div>
-              <button onClick={handleSubmit}>기록 작성</button>
+              <button className="submit" onClick={handleSubmit}>
+                기록 작성
+              </button>
             </div>
           </InputWrapper>
         </form>
@@ -108,7 +116,6 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
 
       <Buttonwrapper>
         <div className="button" onClick={handleCategory}>
-          {" "}
           {/* 이벤트 위임 */}
           <button data-id="sleep" name="수면">
             수면

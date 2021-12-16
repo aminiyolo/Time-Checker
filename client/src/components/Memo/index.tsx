@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { axiosInstance } from "../../config";
 import { RootState } from "../../redux/store";
-import { Textarea } from "./style";
+import { Textarea, BtnContainer } from "./style";
 
 interface IProps {
   date: string;
@@ -34,9 +34,10 @@ const Memo: React.VFC<IProps> = ({ date }) => {
   return (
     <div>
       <Textarea value={memo} onChange={(e) => setMemo(e.target.value)} />
-      <div>
-        <button onClick={handleClick}>메모 저장</button>
-      </div>
+      <BtnContainer>
+        {memo === "" && <button onClick={handleClick}>메모 저장</button>}
+        {memo && <button onClick={handleClick}>메모 수정</button>}
+      </BtnContainer>
     </div>
   );
 };

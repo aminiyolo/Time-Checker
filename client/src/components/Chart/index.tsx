@@ -1,6 +1,7 @@
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import Spinner from "../Spinner";
 
 interface IRecord {
   sleep: number;
@@ -17,6 +18,8 @@ const Pie = () => {
     exercise = 0,
     english = 0,
     reading = 0,
+    isFetching,
+    error,
   } = useSelector((state: RootState) => state.record);
 
   const sum =
@@ -45,9 +48,12 @@ const Pie = () => {
         <Chart
           type="donut"
           series={sum ? [...series] : [1]}
-          height={250}
-          width={350}
+          height={300}
+          width={400}
           options={{
+            legend: {
+              fontSize: "18px",
+            },
             labels: sum ? [...labels] : ["기록 없음"],
             plotOptions: {
               pie: {

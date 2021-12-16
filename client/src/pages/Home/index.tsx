@@ -15,9 +15,12 @@ import {
   DataWrapper,
   ModalWrapper,
   TimeWrapper,
+  SpinnerWrapper,
+  Block,
 } from "./style";
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.css";
+import Spinner from "../../components/Spinner";
 
 interface ITime {
   sTime: string;
@@ -29,7 +32,7 @@ const Home: React.FC = () => {
   const [toggle, setToggle] = useState(false);
   const [date, setDate] = useState(new Date());
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
-  const { times } = useSelector((state: RootState) => state.record);
+  const { times, isFetching } = useSelector((state: RootState) => state.record);
   const dispatch = useDispatch();
   const token = currentUser?.token;
   const id = currentUser?._id;
@@ -58,6 +61,17 @@ const Home: React.FC = () => {
     getRecord(dispatch, { date: _date, id });
   }, [date, id, _date, dispatch]);
 
+  if (isFetching) {
+    return (
+      <SpinnerWrapper>
+        <h1>Loading...</h1>
+        <div>
+          <Spinner />
+        </div>
+      </SpinnerWrapper>
+    );
+  }
+
   if (!currentUser) {
     return <Navigate to="/login" />;
   }
@@ -65,7 +79,7 @@ const Home: React.FC = () => {
   return (
     <>
       <Header>
-        <div className="title">기억보다는 기록을...</div>
+        <div className="title">기억보다는 기록을 남기자</div>
         <div className="buttonContainer">
           <button onClick={handleLogout}>Logout</button>
         </div>
@@ -80,7 +94,7 @@ const Home: React.FC = () => {
           />
         </div>
       </DatePickerWrapper>
-      <hr />
+      <Block />
       <DataWrapper>
         <div className="record">
           <h1>
@@ -96,25 +110,28 @@ const Home: React.FC = () => {
       </DataWrapper>
       <ModalWrapper>
         {toggle && <Modal date={date} handleToggle={handleToggle} />}
-        <TimeWrapper>
-          {!toggle &&
-            times[0] &&
-            times.flat().map((time: ITime, index: number) => {
-              return (
-                <div className="container">
-                  <div key={index}>
-                    <span>{time.sTime}</span>
-                    <span> ~ </span>
-                    <span>{time.fTime}</span>
-                    <span className="category">
-                      / 시간 기록: {time.category}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-        </TimeWrapper>
       </ModalWrapper>
+
+      <TimeWrapper>
+        {!toggle &&
+          times[0] &&
+          times.flat().map((time: ITime, index: number) => {
+            return (
+              <div className="container">
+                <div key={index}>
+                  <span>{time.sTime}</span>
+                  <span> ~ </span>
+                  <span>{time.fTime}</span>
+                  <span className="category">
+                    {" "}
+                    / 시간 기록: {time.category}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+      </TimeWrapper>
+      {/* </ModalWrapper> */}
       <Footer onClick={handleToggle}>
         <button>+</button>
       </Footer>

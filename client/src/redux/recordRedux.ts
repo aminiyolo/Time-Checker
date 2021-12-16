@@ -1,15 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { timeStamp } from "console";
-
-// interface IState {
-//   date: string;
-//   times: string[] | number;
-//   sleep: Number;
-//   coding: Number;
-//   exercise: Number;
-//   english: Number;
-//   reading: Number;
-// }
 
 const initialState = {
   date: "",
@@ -19,14 +8,21 @@ const initialState = {
   exercise: 0,
   english: 0,
   reading: 0,
+  isFetching: false,
+  error: false,
 };
 
 const recordSlice = createSlice({
   name: "record",
   initialState,
   reducers: {
-    loadData: (state, action) => {
-      console.log(action.payload);
+    loadStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+
+    loadSuccess: (state, action) => {
+      state.isFetching = false;
 
       state.times = [action.payload?.times];
       state.sleep = action.payload?.sleep;
@@ -35,8 +31,13 @@ const recordSlice = createSlice({
       state.english = action.payload?.english;
       state.reading = action.payload?.reading;
     },
+
+    loadFailure: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
   },
 });
 
-export const { loadData } = recordSlice.actions;
+export const { loadStart, loadSuccess, loadFailure } = recordSlice.actions;
 export default recordSlice.reducer;
