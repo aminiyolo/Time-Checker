@@ -13,12 +13,8 @@ const Login: React.FC = () => {
   const { currentUser, isFetching, error } = useSelector(
     (state: RootState) => state.user,
   );
-  const [ID, setID] = useState("");
-  const [password, setPassword] = useState("");
-
-  useEffect(() => {
-    initialize(dispatch); // 새로고침 시 state error 값 초기화
-  }, [dispatch]);
+  const [ID, setID] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleSubmit = useCallback(
     (e: React.SyntheticEvent) => {
@@ -31,6 +27,10 @@ const Login: React.FC = () => {
   const handleClick = useCallback(() => {
     naviagate("/register");
   }, [naviagate]);
+
+  useEffect(() => {
+    initialize(dispatch); // 새로고침 시 state error 값 초기화
+  }, [dispatch]);
 
   if (currentUser) {
     // 로그인한 유저 로그인 페이지 접근 금지

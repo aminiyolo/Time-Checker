@@ -77,6 +77,7 @@ export const TimeWrapper = styled.div`
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
+  margin-bottom: 6rem;
 
   & > .container {
     margin-bottom: 1.3rem;

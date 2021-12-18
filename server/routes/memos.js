@@ -6,7 +6,6 @@ router.get("/get", async (req, res) => {
   const { id, date } = req.query;
   try {
     const result = await Memo.findOne({ id, date });
-    console.log(result);
     return res.status(200).json(result);
   } catch (err) {
     console.log(err);
@@ -15,9 +14,7 @@ router.get("/get", async (req, res) => {
 
 router.post("/post", async (req, res) => {
   const { id, memo, date } = req.body;
-  console.log(id, memo, date);
   const data = await Memo.findOne({ id, date });
-  console.log(data);
   try {
     if (data) {
       const data = await Memo.findOneAndUpdate(

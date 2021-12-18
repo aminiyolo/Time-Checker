@@ -1,8 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface IState {
+  date: string;
+  times: any[];
+  sleep: number;
+  coding: number;
+  exercise: number;
+  english: number;
+  reading: number;
+  isFetching: Boolean;
+  error: Boolean;
+}
+
+const initialState: IState = {
   date: "",
-  times: <any>[],
+  times: [],
   sleep: 0,
   coding: 0,
   exercise: 0,
@@ -23,7 +35,6 @@ const recordSlice = createSlice({
 
     loadSuccess: (state, action) => {
       state.isFetching = false;
-
       state.times = [action.payload?.times];
       state.sleep = action.payload?.sleep;
       state.coding = action.payload?.coding;

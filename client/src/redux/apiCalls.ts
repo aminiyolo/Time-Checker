@@ -4,11 +4,11 @@ import {
   loginFailure,
   logoutSuccess,
   loginSet,
-} from "../redux/userRedux";
+} from "./userReducer";
 
 import { axiosInstance } from "../config";
 import { Dispatch } from "redux";
-import { loadStart, loadSuccess, loadFailure } from "./recordRedux";
+import { loadStart, loadSuccess, loadFailure } from "./recordReducer";
 
 interface IUserData {
   ID: string;

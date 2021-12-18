@@ -1,4 +1,4 @@
-import React, { useState, VFC } from "react";
+import React, { useCallback, useState, VFC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { uploadRecord } from "../../redux/apiCalls";
@@ -11,10 +11,10 @@ interface IProps {
 }
 
 const Modal: VFC<IProps> = ({ date, handleToggle }) => {
-  const [startHour, setStartHour] = useState("");
-  const [startMin, setStartMin] = useState("");
-  const [finishHour, setFinishHour] = useState("");
-  const [finishMin, setFinishMin] = useState("");
+  const [startHour, setStartHour] = useState<string>("");
+  const [startMin, setStartMin] = useState<string>("");
+  const [finishHour, setFinishHour] = useState<string>("");
+  const [finishMin, setFinishMin] = useState<string>("");
   const [category, setCategory] = useState<string | undefined>("");
   const [error, setError] = useState<string | null>(null);
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
@@ -30,24 +30,27 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
   const sTime = `${startHour} : ${startMin}`;
   const fTime = `${finishHour} : ${finishMin}`;
 
-  const handleCategory = (e: any) => {
+  const handleCategory = useCallback((e: any) => {
     if (!e.target.dataset.id) return;
     setCategory(e.target.dataset.id);
 
+    // 이벤트 위임을 통한 선택된 카테고리 관리
     e.target.parentNode.childNodes.forEach((el: any) =>
       el.classList.remove("clicked"),
     );
 
     e.target.classList.add("clicked");
-  };
+  }, []);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (!startHour || !startMin || !finishHour || !finishMin)
-      return setError("시간을 작성해주세요.");
-    if (total <= 0) return setError("시간을 맞게 작성해주세요.");
     if (!category) return setError("카테고리를 선택해주세요.");
     if (
+      total <= 0 ||
+      !startHour.trim() ||
+      !startMin.trim() ||
+      !finishHour.trim() ||
+      !finishMin.trim() ||
       Number(startHour) > 24 ||
       Number(startMin) > 60 ||
       Number(finishHour) > 24 ||
@@ -55,7 +58,6 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
     )
       return setError("시간을 맞게 작성해주세요.");
 
-    setError("");
     const id = currentUser!._id;
     const data = {
       id,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { axiosInstance } from "../../config";
 import { RootState } from "../../redux/store";
@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const Memo: React.VFC<IProps> = ({ date }) => {
-  const [memo, setMemo] = useState("");
+  const [memo, setMemo] = useState<string>("");
   const { currentUser } = useSelector((state: RootState) => state.user);
   const id = currentUser?._id;
 
@@ -26,8 +26,10 @@ const Memo: React.VFC<IProps> = ({ date }) => {
       const res = await axiosInstance.get("/memos/get", {
         params: { date, id },
       });
+
       setMemo(res.data?.memo ? res.data?.memo : "");
     };
+
     getData();
   }, [date, id]);
 

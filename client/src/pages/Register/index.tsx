@@ -20,9 +20,12 @@ const Register: React.FC = () => {
   const [idInfo, setIdInfo] = useState<Boolean>(false);
   const [passwordInfo, setPasswordInfo] = useState<Boolean>(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
-  };
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+    },
+    [userInfo],
+  );
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();

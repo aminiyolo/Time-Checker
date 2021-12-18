@@ -1,7 +1,6 @@
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import Spinner from "../Spinner";
 
 interface IRecord {
   sleep: number;
@@ -18,8 +17,6 @@ const Pie = () => {
     exercise = 0,
     english = 0,
     reading = 0,
-    isFetching,
-    error,
   } = useSelector((state: RootState) => state.record);
 
   const sum =
@@ -34,7 +31,6 @@ const Pie = () => {
 
   const checkRecord = (props: IRecord) => {
     const entries = Object.entries(props);
-
     entries.map(
       (entry) => entry[1] > 0 && labels.push(entry[0]) && series.push(entry[1]),
     );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import { RootState } from "../../redux/store";
@@ -29,8 +29,8 @@ interface ITime {
 }
 
 const Home: React.FC = () => {
-  const [toggle, setToggle] = useState(false);
-  const [date, setDate] = useState(new Date());
+  const [toggle, setToggle] = useState<Boolean>(false);
+  const [date, setDate] = useState<Date>(new Date());
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const { times, isFetching } = useSelector((state: RootState) => state.record);
   const dispatch = useDispatch();
@@ -47,18 +47,17 @@ const Home: React.FC = () => {
     try {
       logout(dispatch, token);
     } catch (err) {
-      console.log(err);
       alert("서버측에 오류로 잠시 후에 다시 시도해주세요.");
     }
   };
 
-  const handleToggle = () => {
+  const handleToggle = useCallback(() => {
     setToggle((toggle) => !toggle);
-  };
+  }, []);
 
   useEffect(() => {
     if (!id) return;
-    getRecord(dispatch, { date: _date, id });
+    id && getRecord(dispatch, { date: _date, id });
   }, [date, id, _date, dispatch]);
 
   if (isFetching) {
@@ -117,21 +116,15 @@ const Home: React.FC = () => {
           times[0] &&
           times.flat().map((time: ITime, index: number) => {
             return (
-              <div className="container">
-                <div key={index}>
-                  <span>{time.sTime}</span>
-                  <span> ~ </span>
-                  <span>{time.fTime}</span>
-                  <span className="category">
-                    {" "}
-                    / 시간 기록: {time.category}
-                  </span>
-                </div>
+              <div className="container" key={index}>
+                <span>{time.sTime}</span>
+                <span> ~ </span>
+                <span>{time.fTime}</span>
+                <span className="category"> / 카테고리: {time.category}</span>
               </div>
             );
           })}
       </TimeWrapper>
-      {/* </ModalWrapper> */}
       <Footer onClick={handleToggle}>
         <button>+</button>
       </Footer>
