@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { mobile } from "../../responsive";
 
 export const ModalWrapper = styled.div`
   display: flex;
@@ -7,6 +8,13 @@ export const ModalWrapper = styled.div`
   background-color: gainsboro;
   padding: 2rem 7rem;
   border-radius: 3rem;
+  ${mobile({
+    flexDirection: "column",
+    padding: "6px",
+    borderRadius: 0,
+    width: "100vw",
+    height: "55vh",
+  })}
 `;
 
 export const Buttonwrapper = styled.div`
@@ -14,6 +22,7 @@ export const Buttonwrapper = styled.div`
   padding: 2rem;
   font-size: 1.2rem;
   padding-top: 0;
+  ${mobile({ padding: 0 })}
 
   & > div {
     padding: 1rem;
@@ -38,6 +47,7 @@ export const Buttonwrapper = styled.div`
       background-color: darkgrey;
       color: white;
       cursor: pointer;
+      ${mobile({ fontSize: "18px", padding: "12px" })}
     }
   }
 `;
@@ -47,13 +57,20 @@ export const InputWrapper = styled.div`
   flex-direction: column;
   font-size: 1.5rem;
   font-weight: 600;
+  ${mobile({ fontSize: "20px", textAlign: "center", marginTop: "12px" })}
 
   & > div {
     margin: 0.5rem;
+
     & > input {
       padding: 0.5rem;
       border-radius: 0.5rem;
       font-size: 1.5rem;
+      ${mobile({
+        padding: "2px",
+        width: "20%",
+        fontSize: "22px",
+      })}
     }
 
     & > .submit {
@@ -64,6 +81,8 @@ export const InputWrapper = styled.div`
       font-weight: 600;
       cursor: pointer;
       transition: all 250ms ease-in;
+      ${mobile({ marginBottom: "16px", fontSize: "18px", marginTop: "12px" })}
+
       &:hover {
         letter-spacing: 0.2rem;
       }
@@ -75,4 +94,5 @@ export const Error = styled.div`
   color: red;
   font-size: 1.4rem;
   font-weight: 700;
+  ${mobile({ fontSize: "22px", textAlign: "center", marginBottom: "16px" })}
 `;

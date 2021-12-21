@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import { RootState } from "../../redux/store";
@@ -19,7 +19,6 @@ import {
   Block,
 } from "./style";
 import "react-datepicker/dist/react-datepicker.css";
-import "./style.css";
 import Spinner from "../../components/Spinner";
 
 interface ITime {
@@ -33,9 +32,8 @@ const Home: React.FC = () => {
   const [date, setDate] = useState<Date>(new Date());
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const { times, isFetching } = useSelector((state: RootState) => state.record);
+  const modalFocus = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
-  const token = currentUser?.token;
-  const id = currentUser?._id;
 
   const _date =
     String(date.getFullYear()) +
@@ -43,6 +41,8 @@ const Home: React.FC = () => {
     String(date.getDate());
 
   const handleLogout = async () => {
+    const token = currentUser?.token;
+
     if (!token) return; // early exit
     try {
       logout(dispatch, token);
@@ -56,9 +56,17 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const id = currentUser?._id;
     if (!id) return;
-    id && getRecord(dispatch, { date: _date, id });
-  }, [date, id, _date, dispatch]);
+    getRecord(dispatch, { date: _date, id });
+  }, [date, _date, dispatch, currentUser?._id]);
+
+  useEffect(() => {
+    toggle &&
+      modalFocus.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+  }, [toggle]);
 
   if (isFetching) {
     return (
@@ -100,9 +108,11 @@ const Home: React.FC = () => {
             오늘의 기록
             <span className="min"> (분 단위)</span>
           </h1>
-          <Chart />
+          <div className="chart">
+            <Chart />
+          </div>
         </div>
-        <div>
+        <div className="memo">
           <h2>오늘의 메모</h2>
           <Memo date={_date} />
         </div>
@@ -128,6 +138,7 @@ const Home: React.FC = () => {
       <Footer onClick={handleToggle}>
         <button>+</button>
       </Footer>
+      <div ref={modalFocus}></div>
     </>
   );
 };

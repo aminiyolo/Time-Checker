@@ -1,4 +1,4 @@
-import React, { useCallback, useState, VFC } from "react";
+import React, { useCallback, useState, VFC, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { uploadRecord } from "../../redux/apiCalls";
@@ -27,9 +27,6 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
     String(date.getMonth() + 1) +
     String(date.getDate());
 
-  const sTime = `${startHour} : ${startMin}`;
-  const fTime = `${finishHour} : ${finishMin}`;
-
   const handleCategory = useCallback((e: any) => {
     if (!e.target.dataset.id) return;
     setCategory(e.target.dataset.id);
@@ -44,6 +41,7 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     if (!category) return setError("카테고리를 선택해주세요.");
     if (
       total <= 0 ||
@@ -59,6 +57,9 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
       return setError("시간을 맞게 작성해주세요.");
 
     const id = currentUser!._id;
+    const sTime = `${startHour} : ${startMin}`;
+    const fTime = `${finishHour} : ${finishMin}`;
+
     const data = {
       id,
       date: Date,

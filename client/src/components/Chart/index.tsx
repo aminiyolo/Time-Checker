@@ -30,8 +30,7 @@ const Pie = () => {
   const labels: string[] = [];
 
   const checkRecord = (props: IRecord) => {
-    const entries = Object.entries(props);
-    entries.map(
+    Object.entries(props).map(
       (entry) => entry[1] > 0 && labels.push(entry[0]) && series.push(entry[1]),
     );
   };
@@ -44,8 +43,8 @@ const Pie = () => {
         <Chart
           type="donut"
           series={sum ? [...series] : [1]}
-          height={300}
-          width={400}
+          height={275}
+          width={375}
           options={{
             legend: {
               fontSize: "18px",

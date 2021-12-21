@@ -1,8 +1,10 @@
 import styled from "styled-components";
+import { mobile } from "../../responsive";
 
 export const Header = styled.header`
   padding: 1.5rem;
   background-color: gold;
+  ${mobile({ padding: "20px 12px" })}
 
   & > .title {
     display: flex;
@@ -10,8 +12,9 @@ export const Header = styled.header`
     align-items: center;
     font-size: 2.4rem;
     font-weight: 800;
-    color: white;
+    color: #ffffff;
     margin-top: 0.6rem;
+    ${mobile({ fontSize: "26px" })}
   }
 
   & > .buttonContainer {
@@ -28,6 +31,8 @@ export const Header = styled.header`
       cursor: pointer;
       transition: all 300ms ease-in;
       font-size: 1rem;
+      ${mobile({ fontSize: "12px", padding: "5.2px" })}
+
       &:hover {
         letter-spacing: 0.2rem;
       }
@@ -40,20 +45,38 @@ export const DatePickerWrapper = styled.div`
   justify-content: center;
   background-color: black;
   padding: 0.5rem;
+  .picker {
+    border: none;
+    border-bottom: max-content solid black;
+    font-size: 1.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    ${mobile({ fontSize: "22px" })}
+  }
 `;
 
 export const DataWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  ${mobile({ flexDirection: "column", fontSize: "16px" })}
 
   & > .record {
     margin-bottom: 30px;
 
-    & > h1 > .min {
-      margin-left: 0.25rem;
-      font-size: 1rem;
+    & > h1 {
+      ${mobile({ marginLeft: "12px", fontSize: "26px" })}
+      & > .min {
+        margin-left: 0.25rem;
+        font-size: 1rem;
+      }
     }
+  }
+
+  & > .memo {
+    ${mobile({ textAlign: "center" })}
   }
 `;
 
@@ -69,6 +92,7 @@ export const ModalWrapper = styled.div`
   align-items: center;
   margin-top: 1rem;
   margin-bottom: 4rem;
+  ${mobile({ textAlign: "center", marginBottom: 0 })}
 `;
 
 export const TimeWrapper = styled.div`
@@ -78,6 +102,7 @@ export const TimeWrapper = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
   margin-bottom: 6rem;
+  ${mobile({ fontSize: "15.1px", padding: "0.3px" })}
 
   & > .container {
     margin-bottom: 1.3rem;
@@ -85,9 +110,7 @@ export const TimeWrapper = styled.div`
     padding: 0.9rem;
     background-color: lightblue;
     border-radius: 0.8rem;
-    & > .category {
-      margin-bottom: 1.5rem;
-    }
+    ${mobile({ padding: "16px", marginLeft: 0, marginBottom: "14px" })}
   }
 `;
 
@@ -111,6 +134,8 @@ export const Footer = styled.footer`
   width: 100%;
   position: fixed;
   text-align: center;
+  ${mobile({ padding: "2px", marginTop: 0 })}
+
   & > button {
     cursor: pointer;
     border: none;
@@ -119,6 +144,8 @@ export const Footer = styled.footer`
     border-radius: 0.8rem;
     user-select: none;
     transition: all 300ms ease-out;
+    ${mobile({ padding: "2px 8px", marginTop: 0 })}
+
     &:hover {
       font-size: 2.7rem;
     }

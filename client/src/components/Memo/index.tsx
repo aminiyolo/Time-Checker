@@ -37,8 +37,8 @@ const Memo: React.VFC<IProps> = ({ date }) => {
     <div>
       <Textarea value={memo} onChange={(e) => setMemo(e.target.value)} />
       <BtnContainer>
-        {memo === "" && <button onClick={handleClick}>메모 저장</button>}
-        {memo && <button onClick={handleClick}>메모 수정</button>}
+        {<button onClick={handleClick}>메모 저장</button>}
+        {/* {memo && <button onClick={handleClick}>메모 수정</button>} */}
       </BtnContainer>
     </div>
   );
