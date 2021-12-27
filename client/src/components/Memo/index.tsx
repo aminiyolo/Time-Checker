@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { axiosInstance } from "../../config";
 import { RootState } from "../../redux/store";
 import { Textarea, BtnContainer } from "./style";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IProps {
   date: string;
@@ -16,6 +18,7 @@ const Memo: React.VFC<IProps> = ({ date }) => {
   const handleClick = async () => {
     try {
       await axiosInstance.post("/memos/post", { memo, id, date });
+      toast("저장 완료");
     } catch (err) {
       console.log(err);
     }
@@ -37,8 +40,8 @@ const Memo: React.VFC<IProps> = ({ date }) => {
     <div>
       <Textarea value={memo} onChange={(e) => setMemo(e.target.value)} />
       <BtnContainer>
-        {<button onClick={handleClick}>메모 저장</button>}
-        {/* {memo && <button onClick={handleClick}>메모 수정</button>} */}
+        <button onClick={handleClick}>메모 저장</button>
+        <ToastContainer autoClose={2000} />
       </BtnContainer>
     </div>
   );

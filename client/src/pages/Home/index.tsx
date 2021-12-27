@@ -130,7 +130,7 @@ const Home: React.FC = () => {
                 <span>{time.sTime}</span>
                 <span> ~ </span>
                 <span>{time.fTime}</span>
-                <span className="category"> / 카테고리: {time.category}</span>
+                <span className="category"> / [{time.category}]</span>
               </div>
             );
           })}

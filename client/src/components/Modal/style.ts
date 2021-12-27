@@ -38,7 +38,7 @@ export const Buttonwrapper = styled.div`
 
     & > button {
       margin-left: 1rem;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       padding: 1rem;
       border-radius: 0.8rem;
       outline: none;
@@ -63,14 +63,16 @@ export const InputWrapper = styled.div`
     margin: 0.5rem;
 
     & > input {
-      padding: 0.5rem;
+      /* padding: 0.3rem; */
+      padding: 0;
       border-radius: 0.5rem;
       font-size: 1.5rem;
+      width: 20%;
       ${mobile({
         padding: "2px",
         width: "20%",
         fontSize: "22px",
-      })}
+      })};
     }
 
     & > .submit {

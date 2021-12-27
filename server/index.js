@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const path = require("path");
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,12 @@ mongoose
 app.use("/api/users", require("./routes/user"));
 app.use("/api/records", require("./routes/record"));
 app.use("/api/memos", require("./routes/memos"));
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
 
 const port = process.env.PORT || 8080;
 

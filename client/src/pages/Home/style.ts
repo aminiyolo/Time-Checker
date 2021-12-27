@@ -31,7 +31,7 @@ export const Header = styled.header`
       cursor: pointer;
       transition: all 300ms ease-in;
       font-size: 1rem;
-      ${mobile({ fontSize: "12px", padding: "5.2px" })}
+      ${mobile({ fontSize: "12px", padding: "5.5px" })}
 
       &:hover {
         letter-spacing: 0.2rem;
@@ -102,7 +102,7 @@ export const TimeWrapper = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
   margin-bottom: 6rem;
-  ${mobile({ fontSize: "15.1px", padding: "0.3px" })}
+  ${mobile({ fontSize: "16px", padding: "0.3px", marginTop: "24px" })}
 
   & > .container {
     margin-bottom: 1.3rem;

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, VFC, useEffect } from "react";
+import React, { useCallback, useState, VFC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { uploadRecord } from "../../redux/apiCalls";
@@ -43,16 +43,22 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
     e.preventDefault();
 
     if (!category) return setError("카테고리를 선택해주세요.");
+
     if (
       total <= 0 ||
+      isNaN(total) ||
       !startHour.trim() ||
       !startMin.trim() ||
       !finishHour.trim() ||
       !finishMin.trim() ||
       Number(startHour) > 24 ||
-      Number(startMin) > 60 ||
+      Number(startHour) < 0 ||
+      Number(startMin) >= 60 ||
+      Number(startMin) < 0 ||
       Number(finishHour) > 24 ||
-      Number(finishMin) > 60
+      Number(finishHour) < 0 ||
+      Number(finishMin) >= 60 ||
+      Number(finishMin) < 0
     )
       return setError("시간을 맞게 작성해주세요.");
 
@@ -85,8 +91,8 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
               <label>시작 시간</label>{" "}
               <input
                 maxLength={2}
-                value={startHour}
                 onChange={(e) => setStartHour(e.target.value)}
+                // type="number"
               />{" "}
               :{" "}
               <input
