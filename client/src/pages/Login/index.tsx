@@ -7,14 +7,13 @@ import { Wrapper, Button } from "./style";
 import { Error } from "../../components/Modal/style";
 
 const Login: React.FC = () => {
+  const [ID, setID] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
   const naviagate = useNavigate();
-
   const { currentUser, isFetching, error } = useSelector(
     (state: RootState) => state.user,
   );
-  const [ID, setID] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
 
   const handleSubmit = useCallback(
     (e: React.SyntheticEvent) => {
@@ -38,7 +37,7 @@ const Login: React.FC = () => {
   }
 
   if (currentUser === undefined) {
-    return <div>loading...</div>;
+    return <div>Loading...</div>;
   }
 
   return (

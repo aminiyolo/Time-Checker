@@ -35,15 +35,18 @@ const Home: React.FC = () => {
   const modalFocus = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
-  const _date =
-    String(date.getFullYear()) +
-    String(date.getMonth() + 1) +
-    String(date.getDate());
+  const getDate = useCallback((date: Date): string => {
+    return (
+      String(date.getFullYear()) +
+      String(date.getMonth() + 1) +
+      String(date.getDate())
+    );
+  }, []);
 
   const handleLogout = async () => {
     const token = currentUser?.token;
-
     if (!token) return; // early exit
+
     try {
       logout(dispatch, token);
     } catch (err) {
@@ -56,10 +59,9 @@ const Home: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const id = currentUser?._id;
-    if (!id) return;
-    getRecord(dispatch, { date: _date, id });
-  }, [date, _date, dispatch, currentUser?._id]);
+    if (!currentUser?._id) return;
+    getRecord(dispatch, { date: getDate(date), id: currentUser?._id });
+  }, [date, getDate, dispatch, currentUser?._id]);
 
   useEffect(() => {
     toggle &&
@@ -114,7 +116,7 @@ const Home: React.FC = () => {
         </div>
         <div className="memo">
           <h2>오늘의 메모</h2>
-          <Memo date={_date} />
+          <Memo date={getDate(date)} />
         </div>
       </DataWrapper>
       <ModalWrapper>

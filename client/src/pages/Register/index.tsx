@@ -33,7 +33,7 @@ const Register: React.FC = () => {
 
     try {
       const res = await axiosInstance.post("/users/register", userInfo);
-      !res.data.success && alert(res.data.msg);
+      !res.data.success && alert(res.data.msg); // 회원가입 요청 실패 시 에러 메세지 경고
       if (res.data.success) {
         alert(res.data.msg);
         navigate("/login");

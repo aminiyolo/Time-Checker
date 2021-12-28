@@ -63,11 +63,10 @@ export const InputWrapper = styled.div`
     margin: 0.5rem;
 
     & > input {
-      /* padding: 0.3rem; */
       padding: 0;
       border-radius: 0.5rem;
       font-size: 1.5rem;
-      width: 20%;
+      width: 6rem;
       ${mobile({
         padding: "2px",
         width: "20%",

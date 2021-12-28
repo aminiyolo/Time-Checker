@@ -101,7 +101,7 @@ export const TimeWrapper = styled.div`
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
-  margin-bottom: 6rem;
+  margin-bottom: 8rem;
   ${mobile({ fontSize: "16px", padding: "0.3px", marginTop: "24px" })}
 
   & > .container {

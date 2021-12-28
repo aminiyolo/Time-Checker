@@ -26,30 +26,37 @@ const Pie = () => {
     Number(english) +
     Number(reading);
 
-  const series: number[] = [];
-  const labels: string[] = [];
-
   const checkRecord = (props: IRecord) => {
+    const series: number[] = [];
+    const labels: string[] = [];
+
     Object.entries(props).map(
       (entry) => entry[1] > 0 && labels.push(entry[0]) && series.push(entry[1]),
     );
+
+    return {
+      series,
+      labels,
+    };
   };
 
-  checkRecord({ sleep, coding, exercise, english, reading });
+  const getData = () => {
+    return checkRecord({ sleep, coding, exercise, english, reading });
+  };
 
   return (
     <>
       <div>
         <Chart
           type="donut"
-          series={sum ? [...series] : [1]}
+          series={sum ? [...getData().series] : [1]}
           height={275}
           width={375}
           options={{
             legend: {
               fontSize: "18px",
             },
-            labels: sum ? [...labels] : ["기록 없음"],
+            labels: sum ? [...getData().labels] : ["기록 없음"],
             plotOptions: {
               pie: {
                 donut: {
