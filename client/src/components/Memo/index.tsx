@@ -13,11 +13,11 @@ interface IProps {
 const Memo: React.VFC<IProps> = ({ date }) => {
   const [memo, setMemo] = useState<string>("");
   const { currentUser } = useSelector((state: RootState) => state.user);
-  const id = currentUser?._id;
+  const ID = currentUser?._id;
 
   const handleClick = async () => {
     try {
-      await axiosInstance.post("/memos/post", { memo, id, date });
+      await axiosInstance.post("/memos/post", { memo, id: ID, date });
       toast("저장 완료");
     } catch (err) {
       console.log(err);
@@ -27,14 +27,14 @@ const Memo: React.VFC<IProps> = ({ date }) => {
   useEffect(() => {
     const getData = async () => {
       const res = await axiosInstance.get("/memos/get", {
-        params: { date, id },
+        params: { date, id: ID },
       });
 
       setMemo(res.data?.memo ? res.data?.memo : "");
     };
 
     getData();
-  }, [date, id]);
+  }, [date, ID]);
 
   return (
     <div>

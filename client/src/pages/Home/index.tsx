@@ -30,7 +30,7 @@ interface ITime {
 const Home: React.FC = () => {
   const [toggle, setToggle] = useState<Boolean>(false);
   const [date, setDate] = useState<Date>(new Date());
-  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const { currentUser } = useSelector((state: RootState) => state.user);
   const { times, isFetching } = useSelector((state: RootState) => state.record);
   const modalFocus = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();

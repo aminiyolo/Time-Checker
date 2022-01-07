@@ -23,6 +23,7 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
   const handleCategory = useCallback((e: any) => {
     if (!e.target.dataset.id) return;
     setCategory(e.target.dataset.id);
+
     e.target.parentNode.childNodes.forEach(
       (el: any) => el.classList.remove("clicked"), // 기존에 선택되어져 있던 카테고리에 클래스 제거
     );
@@ -64,7 +65,7 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
   }, [startHour, startMin, finishHour, finishMin]);
 
   const totalCheck = useCallback((total: number) => {
-    if (total <= 0 || isNaN(total)) return true;
+    if (total <= 0 || Number.isNaN(total)) return true;
   }, []);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
@@ -94,7 +95,7 @@ const Modal: VFC<IProps> = ({ date, handleToggle }) => {
       },
     };
 
-    handleToggle();
+    handleToggle(); // 모달 닫기
     uploadRecord(dispatch, data);
   };
 

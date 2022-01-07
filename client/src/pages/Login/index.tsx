@@ -43,20 +43,24 @@ const Login: React.FC = () => {
   return (
     <Wrapper>
       <form onSubmit={handleSubmit}>
-        <label>아이디</label>
+        <label htmlFor="ID">아이디</label>
         <input
+          id="ID"
           name="ID"
           value={ID}
           onChange={(e) => setID(e.target.value)}
           required
+          autoComplete="off"
         />
-        <label>패스워드</label>
+        <label htmlFor="password">패스워드</label>
         <input
+          id="password"
           name="password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          autoComplete="off"
         />
         <button disabled={isFetching} type="submit">
           로그인
